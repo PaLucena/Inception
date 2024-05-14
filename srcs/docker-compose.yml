@@ -6,9 +6,28 @@ services:
     build:
       context: ./requirements/mariadb
     image: mariadb
-    volumes:
-      - mariadb_data: /var/lib/mysql
     restart: always
     env_file: .env
+    ports:
+      - 3306
+    networks:
+      - inception
+  
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+    image: wordpress
+    restart: always
+    depends_on:
+      - mariadb
+    env_file: .env
+    ports:
+      - 9000
+    networks:
+      - inception
 
-network: inception
+networks:
+  inception:
+    name: inception
+    driver: bridge

@@ -8,11 +8,9 @@ services:
     image: mariadb
     restart: always
     env_file: .env
-    ports:
-      - 3306
     networks:
       - inception
-  
+
   wordpress:
     container_name: wordpress
     build:
@@ -22,12 +20,38 @@ services:
     depends_on:
       - mariadb
     env_file: .env
-    ports:
-      - 9000
     networks:
       - inception
 
+  nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+    image: nginx
+    restart: always
+    depends_on:
+      - wordpress
+    env_file: .env
+    networks:
+      - inception
+
+volumes:
+  marivol:
+    name: marivol
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/palucena/data/mariadb
+      o: bind
+      
+  wpvol:
+    name: wpvol
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/palucena/data/wordpress
+      o: bind
+
 networks:
   inception:
-    name: inception
     driver: bridge

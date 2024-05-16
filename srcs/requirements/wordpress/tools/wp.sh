@@ -1,11 +1,13 @@
 #!/bin/sh
 
+mkdir -p /run/php
+
 chown -R www-data.www-data /var/www/html/wordpress
 chmod -R 755 /var/www/html/wordpress
 
 sed -i 's#listen = /run/php/php7.4-fpm.sock#listen = wordpress:9000#g' /etc/php/7.4/fpm/pool.d/www.conf
 
-mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wp-config.php
+mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
 sed -i "s/database_name_here/$MYSQL_NAME/" /var/www/html/wordpress/wp-config.php
 sed -i "s/username_here/$MYSQL_USER/" /var/www/html/wordpress/wp-config.php

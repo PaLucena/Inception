@@ -1,12 +1,11 @@
-version: "3.7"
-
 services:
   mariadb:
     container_name: mariadb
     build:
       context: ./requirements/mariadb
-    image: mariadb
     restart: always
+    volumes:
+      - marivol:/var/lib/mysql
     env_file: .env
     networks:
       - inception
@@ -15,8 +14,9 @@ services:
     container_name: wordpress
     build:
       context: ./requirements/wordpress
-    image: wordpress
     restart: always
+    volumes:
+      - wpvol:/var/www
     depends_on:
       - mariadb
     env_file: .env
@@ -27,11 +27,14 @@ services:
     container_name: nginx
     build:
       context: ./requirements/nginx
-    image: nginx
     restart: always
+    volumes:
+      - wpvol:/var/www
     depends_on:
       - wordpress
     env_file: .env
+    ports:
+      - "12443:12443"
     networks:
       - inception
 
@@ -49,7 +52,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/palucena/data/wordpress
+      device: /home/palucena/data/html
       o: bind
 
 networks:

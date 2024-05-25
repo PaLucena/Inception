@@ -11,6 +11,7 @@ FLUSH PRIVILEGES;
 EOF
 
 chmod 777 config.sql
-mv config.sql /var/lib/mysql/config.sql
 chown -R mysql:root /run/mysqld
+chown -R mysql:mysql /var/lib/mysql
+mv config.sql /var/lib/mysql/config.sql
 mariadbd --init-file /var/lib/mysql/config.sql

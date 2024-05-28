@@ -16,7 +16,7 @@ services:
       context: ./requirements/wordpress
     restart: always
     volumes:
-      - wpvol:/var/www
+      - wpvol:/var/www/html
     depends_on:
       - mariadb
     env_file: .env
@@ -29,12 +29,12 @@ services:
       context: ./requirements/nginx
     restart: always
     volumes:
-      - wpvol:/var/www
+      - wpvol:/var/www/html
     depends_on:
       - wordpress
     env_file: .env
     ports:
-      - "12443:12443"
+      - "443:443"
     networks:
       - inception
 
@@ -52,7 +52,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/palucena/data/html
+      device: /home/palucena/data/wordpress
       o: bind
 
 networks:

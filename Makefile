@@ -5,18 +5,18 @@ DC = docker compose -f $(SRC)
 # Construye y levanta los contenedores
 all:
 	mkdir -p ~/data/mariadb
-	mkdir -p ~/data/html
+	mkdir -p ~/data/wordpress
 #	@$(DC) build
-	@$(DC) up -d
+	@$(DC) up -d --build
 
 # Derriba los contenedores
 clean:
 	@$(DC) down
 
 fclean: clean
-#	@docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); docker network rm $$(docker network ls -q) 2>/dev/null
 	@docker system prune -af
-	@sudo rm -rf ~/data
+	@sudo rm -rf ~/data/*
+	@docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); docker network rm $$(docker network ls -q) 2>/dev/null
 
 # Reinicia los contenedores
 re: clean all

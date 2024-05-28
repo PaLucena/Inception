@@ -22,7 +22,12 @@ wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
-#wp core install --allow-root --url=$DOMAIN_NAME --title=WeLcOmEtOmYbLoG  --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --skip-email --path=/var/www/html/wordpress
-#wp user create --allow-root $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --path=/var/www/html/wordpress --url=$DOMAIN_NAME
+wp core install --allow-root --url=$DOMAIN_NAME --title=WeLcOmEtOmYbLoG  --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --skip-email --path=/var/www/html/wordpress
+wp user create --allow-root $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --path=/var/www/html/wordpress --url=$DOMAIN_NAME
+
+wp theme install twentytwenty --activate --allow-root
+cp /var/www/html/inception_page.html /var/www/html/wordpress/wp-content/themes/twentytwenty/
+cd /var/www/html/wordpress/wp-content/themes/twentytwenty/
+wp post create --post_type=page --post_title='Inception Page' --post_content="$(cat inception_page.html)" --post_status=publish --allow-root
 
 /usr/sbin/php-fpm7.4 -F

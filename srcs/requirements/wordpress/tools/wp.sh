@@ -26,8 +26,8 @@ wp core install --allow-root --url=$DOMAIN_NAME --title=WeLcOmEtOmYbLoG  --admin
 wp user create --allow-root $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --path=/var/www/html/wordpress --url=$DOMAIN_NAME
 
 wp theme install twentytwenty --activate --allow-root
-cp /var/www/html/inception_page.html /var/www/html/wordpress/wp-content/themes/twentytwenty/
-cd /var/www/html/wordpress/wp-content/themes/twentytwenty/
+cp /var/www/html/inception_page.html /var/www/html/wordpress/wp-content/themes/twentytwentyfour/
+cd /var/www/html/wordpress/wp-content/themes/twentytwentyfour/
 wp post create --post_type=page --post_title='Inception Page' --post_content="$(cat inception_page.html)" --post_status=publish --allow-root
 
 /usr/sbin/php-fpm7.4 -F
